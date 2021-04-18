@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 
 import styles from './home.module.scss'
+import { SubscribeButton } from '../components/SubscribeButton'
 
 const IndexPage = () => (
   <div>
@@ -16,6 +17,7 @@ const IndexPage = () => (
           Get access to all publications <br/>
           <span>for only $9.90 month</span>
         </p>
+        <SubscribeButton />
       </section>
       <img src="/images/avatar.svg" alt="Girl codding"/>
     </main>
