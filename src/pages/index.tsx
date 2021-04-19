@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 
 import styles from './home.module.scss'
@@ -35,7 +35,7 @@ export default function IndexPage({product}:HomeProps){
   )
 }
 
-  export const getServerSideProps:GetServerSideProps = async () => {
+  export const getStaticProps:GetStaticProps = async () => {
     const price = await stripe.prices.retrieve('price_1IhjivK55UgA8d4Th1P1DaPx', {
       expand:['product']
     })
@@ -51,6 +51,7 @@ export default function IndexPage({product}:HomeProps){
     return {
       props:{
         product
-      }
+      },
+      revalidate: 60 * 60 * 24 //24 hours
     }
   }
