@@ -24,7 +24,7 @@ export default function IndexPage({product}:HomeProps){
         <span>👏 Hey! welcome</span>
         <h1>News about the <span>React</span> world</h1>
         <p>
-          Get access to all publications <br/>
+          Get access to all post and articles <br/>
           <span>for only {product.amount} month</span>
         </p>
         <SubscribeButton priceId={product.priceId} />
@@ -39,8 +39,6 @@ export default function IndexPage({product}:HomeProps){
     const price = await stripe.prices.retrieve('price_1IhjivK55UgA8d4Th1P1DaPx', {
       expand:['product']
     })
-    console.log(price)
-
     const product ={
       priceId: price.id,
       amount:new Intl.NumberFormat('en-Us', {
