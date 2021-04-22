@@ -6,8 +6,6 @@ import styles from './styles.module.scss'
 export const SignInButton:React.FC = () => {
   const [ session ] =useSession()
 
-  console.log("session:",session)
-
   return session ? (
     <button
         type="button"
