@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { Readable } from 'stream'
 import Stripe from "stripe"
 import { stripe } from "../../services/stripe"
+import { saveSubscription } from "./_lib/menageSubscription"
 
 async function buffer(readable: Readable) {
   const chunks = []
@@ -37,14 +38,29 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     } catch (error) {
       return response.status(400).send(`Webhook error: ${error.message}`)
     }
-
     const { type } = event
 
     if(relevantEvents.has(type)) {
-      console.log('Received event:', event)
-      //Do something
-    }
+     try {
+      switch (type) {
+        case 'checkout.session.completed':
 
+          const checkoutSession = event.data.object as Stripe.Checkout.Session
+
+          await saveSubscription(
+            checkoutSession.subscription!.toString(),
+            checkoutSession.customer!.toString()
+          )
+
+          break
+        default:
+          throw new Error('Unhandled event!')
+      }
+     } catch (error) {
+       //sentry or bugsnag to send error
+       return response.json({erro:'Webhook handler error'})
+     }
+    }
     response.json({received: true})
   } else {
     response.setHeader('Allow', 'POST')
