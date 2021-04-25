@@ -38,14 +38,6 @@ export default function Posts({ posts }: postsProps) {
   )
 }
 
-interface Content {
-  type: string
-  text: string
-}
-interface postProps {
-  content: Content
-}
-
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient()
 
