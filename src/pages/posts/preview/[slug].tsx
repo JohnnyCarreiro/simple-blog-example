@@ -60,7 +60,7 @@ export const getStaticPaths = () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   // const session = await getSession({ req })
   console.log('Params:', params)
@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient()
   const response = await prismic.getByUID('posts', String(slug),{
-    lang
+    lang: String(locale)
   })
   console.log('Response:', response)
 

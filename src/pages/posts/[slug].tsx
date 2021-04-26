@@ -35,7 +35,7 @@ export default function Post({ post }: IPostProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query, locale }) => {
 
   const session = await getSession({ req })
 
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
   const prismic = getPrismicClient(req)
   const response = await prismic.getByUID('posts', String(slug),{
-    lang
+    lang: String(locale)
   })
 
   const post = {

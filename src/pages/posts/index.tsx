@@ -7,6 +7,7 @@ import { RichText } from 'prismic-dom'
 
 import { getPrismicClient } from '../../services/prismic'
 import styles from './styles.module.scss'
+import { useRouter } from 'next/router'
 
 type Post = {
   slug: string
@@ -21,6 +22,7 @@ interface postsProps {
 }
 
 export default function Posts({ posts }: postsProps) {
+  const { locale } = useRouter()
   return (
     <>
       <Head>
@@ -29,7 +31,7 @@ export default function Posts({ posts }: postsProps) {
       <main className={styles.container} >
         <div className={styles.posts_list} >
           { posts.map(post => (
-            <Link key={post.slug} href={`/posts/${post.slug}?lang=${post.lang}`} >
+            <Link key={post.slug} href={`/posts/${post.slug}?lang=${post.lang}`} locale={locale} >
               <a>
                 <time>{ post.updatedAt }</time>
                 <strong>{ post.title }</strong>
@@ -43,7 +45,7 @@ export default function Posts({ posts }: postsProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const prismic = getPrismicClient()
 
   const response = await prismic.query([
@@ -51,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ], {
     fetch: ['posts.title', 'posts.content'],
     pageSize: 100,
-    lang:'*'
+    lang: String(locale)
   })
 
 
