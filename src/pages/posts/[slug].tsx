@@ -35,7 +35,7 @@ export default function Post({ post }: IPostProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
 
   const session = await getSession({ req })
 
