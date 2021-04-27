@@ -23,6 +23,7 @@
     "stripe": "^8.144.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^3.1.0",
     "@types/next-auth": "^3.13.0",
     "@types/node": "^12.12.21",
     "@types/prismic-dom": "^2.1.1",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-icons": "^3.0.0",
     "@types/stripe": "^8.0.417",
+    "netlify-plugin-next-dynamic": "^1.0.9",
     "typescript": "4.0"
   },
   "license": "MIT"
