@@ -1,8 +1,8 @@
 import { GetStaticProps } from "next"
-import { getSession, useSession } from "next-auth/client"
+import { useSession } from "next-auth/client"
 import Head from "next/head"
 import Link from "next/link"
-import { Router, useRouter } from "next/router"
+import { useRouter } from "next/router"
 
 import { RichText } from "prismic-dom"
 import { useEffect } from "react"
@@ -61,26 +61,12 @@ export const getStaticPaths = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
-
-  // const session = await getSession({ req })
-  console.log('Params:', params)
-  const { slug, lang } = params!
-  console.log('slug:', slug, 'lang:', lang)
-
-  // if(!session?.activeSubscription) {
-  //   return {
-  //     redirect: {
-  //       destination: '/',
-  //       permanent: false
-  //     }
-  //   }
-  // }
+  const { slug } = params!
 
   const prismic = getPrismicClient()
   const response = await prismic.getByUID('posts', String(slug),{
     lang: String(locale)
   })
-  console.log('Response:', response)
 
   const post = {
     slug,

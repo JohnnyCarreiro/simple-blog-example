@@ -8,6 +8,7 @@ import { RichText } from 'prismic-dom'
 import { getPrismicClient } from '../../services/prismic'
 import styles from './styles.module.scss'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/client'
 
 type Post = {
   slug: string
@@ -23,6 +24,8 @@ interface postsProps {
 
 export default function Posts({ posts }: postsProps) {
   const { locale } = useRouter()
+  const [ session ] = useSession()
+
   return (
     <>
       <Head>
@@ -31,7 +34,13 @@ export default function Posts({ posts }: postsProps) {
       <main className={styles.container} >
         <div className={styles.posts_list} >
           { posts.map(post => (
-            <Link key={post.slug} href={`/posts/${post.slug}?lang=${post.lang}`} locale={locale} >
+            <Link key={post.slug} href={
+              session?.activeSubscription
+                ? `/posts/${post.slug}`
+                : `/posts/preview/${post.slug}`
+              }
+              locale={locale}
+            >
               <a>
                 <time>{ post.updatedAt }</time>
                 <strong>{ post.title }</strong>
@@ -75,7 +84,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       posts
-    }
+    },
+    revalidate: 60 * 60 * 24 //24 hours
   }
 }
 
