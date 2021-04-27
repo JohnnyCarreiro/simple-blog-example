@@ -1,8 +1,0 @@
-[build]
-  base = "/"
-  command = "yarn build"
-  publish = "/out"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-  package = "netlify-plugin-next-dynamic"
