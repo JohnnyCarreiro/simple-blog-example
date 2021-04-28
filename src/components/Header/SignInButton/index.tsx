@@ -11,6 +11,7 @@ export const SignInButton:React.FC = () => {
         type="button"
         className={styles.signInButton}
         onClick={()=>signOut()}
+        formMethod='post'
       >
         <FaGithub color="#04D361" />
         {session.user?.name}
