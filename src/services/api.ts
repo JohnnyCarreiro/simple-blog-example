@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: `${process.env.PRODUCTION_URL}/api`
+  baseURL: `https://ignews.johnnycarreiro.com/api`
 })
